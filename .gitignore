@@ -26,3 +26,5 @@ build
 
 .terraform/
 .history/
+
+*.token
