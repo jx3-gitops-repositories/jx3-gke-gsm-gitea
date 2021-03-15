@@ -379,7 +379,27 @@ createBootRepo() {
 installGitOperator() {
   step "installing the git operator at url: ${GIT_URL}/${ORG}/cluster-$NAME-dev with user: ${BOT_USER} token: ${BOT_PASS}"
 
-  jx admin operator --url "${GIT_URL}/${ORG}/cluster-$NAME-dev" --username ${BOT_USER} --token ${TOKEN}
+  #jx admin operator --url "${GIT_URL}/${ORG}/cluster-$NAME-dev" --username ${BOT_USER} --token ${TOKEN}
+
+FILE_JXGO_VALUES_YAML=`cat <<EOF
+bootServiceAccount:
+  enabled: true
+  annotations:
+    iam.gke.io/gcp-service-account: "${TF_VAR_cluster_name}-boot@${TF_VAR_gcp_project}.iam.gserviceaccount.com"
+env:
+  NO_RESOURCE_APPLY: "true"
+url: "${GIT_URL}/${ORG}/cluster-$NAME-dev"
+username: "${BOT_USER}"
+password: "${TOKEN}"
+EOF
+`
+
+  helm repo add jx3 https://storage.googleapis.com/jenkinsxio/charts
+
+  echo "${FILE_JXGO_VALUES_YAML}" | helm upgrade --install --namespace jx-git-operator --create-namespace -f - jxgo jx3/jx-git-operator
+
+  # lets tail the boot log
+  jx admin log -w
 }
 
 runBDD() {
