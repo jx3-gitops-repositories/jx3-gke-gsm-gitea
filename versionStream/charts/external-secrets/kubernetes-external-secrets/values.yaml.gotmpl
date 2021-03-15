@@ -1,0 +1,50 @@
+jxRequirements:
+  ingress:
+    domain: cluster.local
+    namespaceSubDomain: "."
+    tls:
+      enabled: true
+
+crds:
+  create: true
+
+{{- if eq .Values.jxRequirements.secretStorage "local" }}
+replicaCount: 0
+{{- end }}
+
+{{- if eq .Values.jxRequirements.secretStorage "vault" }}
+env:
+  VAULT_ADDR: https://vault.jx-vault:8200
+  NODE_EXTRA_CA_CERTS: "/usr/local/share/ca-certificates/ca.crt"
+
+deploymentInitContainers:
+  initContainers:
+  - name: init-vault-secret
+    image: bitnami/kubectl:1.20.2
+    command: ["/bin/sh", "-c"]
+    args: ["kubectl get secret -n jx-vault vault-tls -o jsonpath='{.data.ca\\.crt}' | base64 --decode > /tmp/vault/ca.crt"]
+    volumeMounts:
+    - name: vault-ca
+      mountPath: /tmp/vault
+
+extraVolumes:
+  - name: vault-ca
+    emptyDir: {}
+
+extraVolumeMounts:
+  - name: vault-ca
+    mountPath: /usr/local/share/ca-certificates
+
+customClusterRoles:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["vault-tls"]
+    verbs: ["get", "list"]
+
+{{- end }}
+
+{{- if eq .Values.jxRequirements.secretStorage "gsm" }}
+serviceAccount:
+  annotations:
+    iam.gke.io/gcp-service-account: {{ .Values.jxRequirements.cluster.clusterName }}-sm@{{ .Values.jxRequirements.cluster.project }}.iam.gserviceaccount.com
+{{- end }}

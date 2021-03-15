@@ -1,0 +1,30 @@
+apiVersion: core.jenkins-x.io/v4beta1
+kind: Requirements
+spec:
+  autoUpdate:
+    enabled: false
+    schedule: ""
+  cluster:
+    devEnvApprovers:
+    - todo
+    environmentGitOwner: todo
+    gitKind: gitea
+    gitName: gitea
+    provider: gke
+    registry: gcr.io
+  environments:
+  - key: dev
+  - key: staging
+  - key: production
+  ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: -jx.
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  repository: nexus
+  secretStorage: gsm
+  vault: {}
+  webhook: lighthouse
