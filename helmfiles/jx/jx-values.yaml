@@ -22,8 +22,8 @@ jxRequirements:
     devEnvApprovers:
     - todo
     environmentGitOwner: todo
-    gitKind: github
-    gitName: github
+    gitKind: gitea
+    gitName: gitea
     gitServer: https://github.com
     provider: gke
     registry: gcr.io

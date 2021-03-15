@@ -121,15 +121,6 @@
 	      <td><a href='https://jenkins-x.io/'>source</a></td>
 	    </tr>
     <tr>
-		      <td colspan='4'><h3>nginx</h3></td>
-		    </tr>
-	    <tr>
-	      <td><a href='https://github.com/kubernetes/ingress-nginx' title='Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer'> <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png' width='24px' height='24px'> ingress-nginx </a></td>
-	      <td>3.12.0</td>
-	      <td></td>
-	      <td><a href='https://github.com/kubernetes/ingress-nginx'>source</a></td>
-	    </tr>
-    <tr>
 		      <td colspan='4'><h3>secret-infra</h3></td>
 		    </tr>
 	    <tr>
