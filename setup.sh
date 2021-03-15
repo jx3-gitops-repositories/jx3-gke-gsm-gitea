@@ -410,8 +410,6 @@ create() {
 
   createBootRepo
   installGitOperator
-
-  #runBDD
 }
 
 
