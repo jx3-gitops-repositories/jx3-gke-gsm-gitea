@@ -39,6 +39,10 @@ GITEA_ADMIN_PASSWORD=${GITEA_ADMIN_PASSWORD:-"abcdEFGH"}
 export GIT_SCHEME="http"
 export GIT_KIND="gitea"
 
+# lets setup git
+git config --global --add user.name JenkinsXBot
+git config --global --add user.email jenkins-x@googlegroups.com
+
 
 # write message to console and log
 info() {
