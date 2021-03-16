@@ -293,7 +293,7 @@ export GIT_SERVER_URL="${GIT_URL}"
 export GIT_SERVER_HOST="${GIT_HOST}"
 export GIT_USER="${DEVELOPER_USER}"
 EOF
-
+`
   cat ${ENV_VARS} > "${DIR}/variables.sh"
 
 
