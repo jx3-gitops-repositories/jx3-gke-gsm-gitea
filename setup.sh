@@ -288,6 +288,15 @@ giteaCreateUserAndToken() {
 configureGiteaOrgAndUsers() {
   step "Setting up gitea organisation and users"
 
+ENV_VARS=`cat << 'EOF'
+export GIT_SERVER_URL="${GIT_URL}"
+export GIT_SERVER_HOST="${GIT_HOST}"
+export GIT_USER="${DEVELOPER_USER}"
+EOF
+
+  cat ${ENV_VARS} > "${DIR}/variables.sh"
+
+
   giteaCreateUserAndToken "${BOT_USER}" "${BOT_PASS}"
   botToken="${TOKEN}"
   echo "${botToken}" > "${DIR}/.bot.token"
