@@ -288,9 +288,6 @@ giteaCreateUserAndToken() {
 configureGiteaOrgAndUsers() {
   step "Setting up gitea organisation and users"
 
-  echo export GIT_SERVER_URL="${GIT_URL}" >> ${DIR}/variables.sh
-  echo export GIT_SERVER_HOST="${GIT_HOST}" >> ${DIR}/variables.sh
-  echo export GIT_USER="${DEVELOPER_USER}" >> ${DIR}/variables.sh
 
 
   giteaCreateUserAndToken "${BOT_USER}" "${BOT_PASS}"
@@ -300,7 +297,15 @@ configureGiteaOrgAndUsers() {
   giteaCreateUserAndToken "${DEVELOPER_USER}" "${DEVELOPER_PASS}"
   developerToken="${TOKEN}"
   echo "${developerToken}" > "${DIR}/.developer.token"
+
+  echo "export GIT_SERVER_URL=\"${GIT_URL}\"" >> ${DIR}/variables.sh
+  echo "export GIT_SERVER_HOST=\"${GIT_HOST}\"" >> ${DIR}/variables.sh
+  echo "export GIT_USER=\"${DEVELOPER_USER}\"" >> ${DIR}/variables.sh
+  echo "export GIT_TOKEN=\"${developerToken}\"" >> ${DIR}/variables.sh
+
   substep "creating ${ORG} organisation"
+
+
 
   curlTokenAuth "${developerToken}"
   json=`curl -s -X POST "${GIT_URL}/api/v1/orgs" "${CURL_AUTH[@]}" "${CURL_TYPE_JSON[@]}" --data '{"repo_admin_change_team_access": true, "username": "'${ORG}'", "visibility": "private"}'`
