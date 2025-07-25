@@ -1,8 +1,8 @@
-filepath: ""
 environments:
   default:
     values:
     - jx-values.yaml
+---
 namespace: kuberhealthy
 repositories:
 - name: jxgh
@@ -14,5 +14,3 @@ releases:
   name: kh-tls-check
   values:
   - jx-values.yaml
-templates: {}
-renderedvalues: {}
